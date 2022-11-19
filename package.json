@@ -1,0 +1,36 @@
+{
+  "name": "darts-web",
+  "version": "0.1.0",
+  "description": "Yet another darts calculator",
+  "scripts": {
+    "start": "vite --host 0.0.0.0 --port 3000",
+    "build": "vite build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "darts",
+    "web",
+    "react",
+    "preact",
+    "parcel",
+    "pwa"
+  ],
+  "author": "Clément Dandrieux",
+  "license": "MIT",
+  "browserslist": "> 0.5%, last 2 versions, not dead",
+  "devDependencies": {
+    "@babel/plugin-transform-react-jsx-source": "^7.19.6",
+    "@preact/preset-vite": "^2.4.0",
+    "@prefresh/vite": "^2.2.9",
+    "autoprefixer": "^10.4.13",
+    "preact-render-to-string": "^5.2.1",
+    "vite": "^3.0.9",
+    "vite-plugin-ssr": "0.4.50"
+  },
+  "dependencies": {
+    "clsx": "^1.2.1",
+    "preact": "^10.11.2",
+    "tailwindcss": "^3.2.4",
+    "wouter": "^2.9.0"
+  }
+}
