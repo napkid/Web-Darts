@@ -1,27 +1,32 @@
-import React, { useState } from 'react'
+import { useState } from 'preact/hooks'
+import { useRoute } from 'wouter'
+import { games } from '../config/games.js'
+
+import { useGlobalState } from '../hooks/useGlobalState.jsx'
 import TeamSelector from "./TeamSelector.jsx"
 
 
 const GameContainer = props => {
-    const {
-        game,
-        players
-    } = props
 
-    const Game = game.component
+    const [players] = useGlobalState('players')
+
+    const [, params] = useRoute('/game/:name')
+    const currentGame = games.find(g => g.value === params.name)
+
+    const Game = currentGame.component
 
     const [teams, setTeams] = useState(null)
 
 
     
-    return (!teams && game.teams)
+    return (!teams && currentGame.teams)
         ? <TeamSelector
             players={players}
-            teamSettings={game.teams}
+            teamSettings={currentGame.teams}
             onSubmit={setTeams}
         />
         : <Game
-            {...game.props}
+            {...currentGame.props}
             teams={teams}
             players={players}
         />

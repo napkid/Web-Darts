@@ -1,5 +1,3 @@
-import React, { useState } from 'react'
-
 import { Link, Route } from 'wouter'
 
 import clsx from 'clsx'
@@ -8,9 +6,6 @@ import { useTranslation } from '../config/i18n'
 
 
 const GameSelect = props => {
-    const  {
-        onSubmit
-    } = props
 
     const {
         t
@@ -33,7 +28,6 @@ const GameSelect = props => {
                                     'from-red-800 to-red-600': game.colorClass === 'red'
                                 }
                             )}
-                            onClick={() => setCategory(game.value)}
                         >
                             {game.label}
                         </button>
@@ -44,13 +38,14 @@ const GameSelect = props => {
         <Route path="/game-selection/:id">
             {params => <ul className="grid grid-cols-2 gap-2 mb-4">
                 {gamesByCat[params.id].map(g => <li>
-                    <button
-                        type="button"
-                        className="w-full rounded-lg border border-transparent bg-emerald-600 px-6 py-3 text-xl font-semibold text-white shadow-xl hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
-                        onClick={() => onSubmit(g.value)}
-                    >
-                        {g.label}
-                    </button>
+                    <Link href={`/game/${g.value}`}>
+                        <button
+                            type="button"
+                            className="w-full rounded-lg border border-transparent bg-emerald-600 px-6 py-3 text-xl font-semibold text-white shadow-xl hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                        >
+                            {g.label}
+                        </button>
+                    </Link>
                 </li>)}
             </ul>}
         </Route>
