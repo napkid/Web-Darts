@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { useState } from 'preact/hooks'
-import { useTranslation } from '../config/i18n'
+import { useTranslation } from '../hooks/i18n'
 
 const LocaleSelector = props => {
     const {

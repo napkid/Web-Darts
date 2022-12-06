@@ -2,7 +2,7 @@ import { Link, Route } from 'wouter'
 
 import clsx from 'clsx'
 import { categories, games, gamesByCat } from "../config/games"
-import { useTranslation } from '../config/i18n'
+import { useTranslation } from '../hooks/i18n'
 
 
 const GameSelect = props => {

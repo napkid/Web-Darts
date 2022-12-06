@@ -3,7 +3,7 @@ import clsx from "clsx"
 import DartKeyboard from "../../DartKeyboard.jsx"
 import GameBoard from "./GameBoard.jsx"
 import DescriptionList from '../../DescriptionList.jsx'
-import { useTranslation } from '../../../config/i18n.jsx'
+import { useTranslation } from '../../../hooks/i18n.jsx'
 import DartButton from '../../DartButton.jsx'
 import WinnerModal from '../../WinnerModal.jsx'
 

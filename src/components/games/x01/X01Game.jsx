@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import clsx from "clsx"
 import DartKeyboard from "../../DartKeyboard.jsx"
-import { useTranslation } from '../../../config/i18n.jsx'
+import { useTranslation } from '../../../hooks/i18n.jsx'
 import DescriptionList from '../../DescriptionList.jsx'
 import DartButton from '../../DartButton.jsx'
 import WinnerModal from '../../WinnerModal.jsx'

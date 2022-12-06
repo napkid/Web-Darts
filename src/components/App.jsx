@@ -2,7 +2,6 @@
 import { Link, Route, Switch, useLocation } from 'wouter'
 
 import { games } from "../config/games.js"
-import { I18nProvider } from '../config/i18n.jsx'
 import { GlobalStateProvider, useGlobalState } from '../hooks/useGlobalState.jsx'
 import BackGround from "./Background.jsx"
 import GameContainer from "./GameContainer.jsx"
@@ -29,7 +28,6 @@ const App = () => {
 
 
   return <GlobalStateProvider>
-    <I18nProvider>
       <div className="relative h-screen">
         <div className="absolute top-0 left-0 w-full h-full overflow-scroll">
             <header className="z-50 fixed top-0 w-full py-4">
@@ -71,7 +69,6 @@ const App = () => {
         </div>
         <BackGround />
       </div>
-    </I18nProvider>
   </GlobalStateProvider>
 }
 

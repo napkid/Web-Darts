@@ -1,9 +1,10 @@
-import { useTranslation } from "../config/i18n"
+import { useTranslation } from "../hooks/i18n"
 
 
 const WinnerModal = props => {
     const {
         onRestart,
+        onExit,
         text
     } = props
 
@@ -21,12 +22,26 @@ const WinnerModal = props => {
             <h5 className="text-3xl font-semibold mb-8">
                 {text}
             </h5>
-            <button
-                className="bg-emerald-800 py-4 px-6 rounded-lg text-white font-semibold text-xl"
-                onClick={onRestart}
-            >
-                {t`restart`}
-            </button>
+            <div className="flex flex-wrap w-full space-y-4 sm:space-y-0">
+                <div className="px-2 w-full sm:w-1/2">
+                    <button
+                        className="bg-emerald-800 py-4 px-6 rounded-lg text-white font-semibold text-xl"
+                        onClick={onRestart}
+                    >
+                        {t`restart`}
+                    </button>
+
+                </div>
+                <div className="px-2 w-full sm:w-1/2">
+                    <button
+                        className="bg-gray-400 py-4 px-6 rounded-lg text-white font-semibold text-xl"
+                        onClick={onRestart}
+                    >
+                        {t`exit`}
+                    </button>
+                </div>
+
+            </div>
         </div>
         </div>
     </div>

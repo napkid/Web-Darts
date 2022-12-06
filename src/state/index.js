@@ -1,15 +1,19 @@
 import { useReducer } from 'preact/hooks'
+import { i18nReducer } from './i18n'
 
 import { playerReducer } from './players'
 
 const reducers = {
-    players: playerReducer
+    players: playerReducer,
+    i18n: i18nReducer
 }
 
-const persistedKeys = ['players']
+const persistedKeys = ['players', 'i18n']
 
 const globalReducer = (state, action) => {
-    
+
+    console.log(state, action)
+
     const nextState = {...state}
     for(const key in reducers){
         if(action.type === 'init'){

@@ -13,5 +13,6 @@ export default {
     'cross': 'Croix',
     'circle': 'Rond',
     'team-win': team => `L'équipe ${team} a gagné !`,
-    'choose-game': 'Choix du jeu'
+    'choose-game': 'Choix du jeu',
+    'exit': 'Quitter'
 }

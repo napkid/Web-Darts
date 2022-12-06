@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'preact/hooks'
 import { useLocation } from 'wouter'
 
-import { useTranslation } from '../../config/i18n.jsx'
+import { useTranslation } from '../../hooks/i18n.jsx'
 import { useGlobalState } from '../../hooks/useGlobalState.jsx'
 import PlayerForm from "../PlayerForm.jsx"
 

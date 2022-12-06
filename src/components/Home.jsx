@@ -1,5 +1,5 @@
 import { Link } from 'wouter'
-import { useTranslation } from "../config/i18n"
+import { useTranslation } from "../hooks/i18n"
 
 const Home = () => {
 
