@@ -17,8 +17,6 @@ const GameContainer = props => {
 
     const [teams, setTeams] = useState(null)
 
-
-    
     return (!teams && currentGame.teams)
         ? <TeamSelector
             players={players}

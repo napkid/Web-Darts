@@ -17,6 +17,7 @@ export const scoreGames = [{
     value: '301',
     label: '301',
     component: X01Game,
+    minPlayers: 2,
     props: {
         max: 301
     }
@@ -24,6 +25,7 @@ export const scoreGames = [{
     value: '501',
     label: '501',
     component: X01Game,
+    minPlayers: 2,
     props: {
         max: 501
     }
@@ -31,6 +33,7 @@ export const scoreGames = [{
     value: '701',
     label: '701',
     component: X01Game,
+    minPlayers: 2,
     props: {
         max: 701
     }
@@ -40,6 +43,7 @@ export const specialGames = [{
     label: 'Tic-Tac-Toe',
     value: 'tic-tac-toe',
     component: TicTacToeGame,
+    minPlayers: 2,
     teams: [{
         id: 'cross',
         name: 'cross'
@@ -49,6 +53,7 @@ export const specialGames = [{
     }]
 }, {
     label: 'Cricket',
+    minPlayers: 2,
     value: 'cricket'
 }]
 

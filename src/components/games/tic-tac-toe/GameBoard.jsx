@@ -77,7 +77,7 @@ const GameBoard = props => {
                         y={(rowIdx)*step+step/2}
                         dominantBaseline="central"
                         textAnchor="middle"
-                        className="text-sm fill-white"
+                        className="text-xs fill-white"
                     >
                         {box.value}
                     </text>

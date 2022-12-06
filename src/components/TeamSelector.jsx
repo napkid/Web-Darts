@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import clsx from "clsx"
 import useDraggable from "../hooks/useDraggable"
+import { useTranslation } from '../hooks/i18n'
 
 
 const PlayerDisplay = props => {
@@ -34,6 +35,8 @@ const TeamSelector = (props) => {
         players,
         onSubmit
     } = props
+
+    const { t } = useTranslation()
 
     const [teams, setTeams] = useState(teamSettings.map(setting => ({
         id: setting.id,
@@ -77,7 +80,7 @@ const TeamSelector = (props) => {
             {teams.map(team => <div className="mb-4 border border-emerald-600 rounded-lg">
                 <header className="shadow-lg rounded-t-lg bg-emerald-900 text-white py-2">
                     <h5 className="text-2xl font-semibold text-center">
-                        {team.name}
+                        {t(team.name)}
                     </h5>
                 </header>
                 <ul className={clsx('h-full bg-emerald-600 px-8 py-4 rounded-b-lg')}
@@ -99,7 +102,6 @@ const TeamSelector = (props) => {
                         || teams.reduce((c, t) => c+t.players.length, 0) < players.length
                     )
                         && <li className="h-12 border-2 border-dashed">
-                        {/* Placer un joueur ici */}
                     </li>}
                 </ul>
             </div>)}
@@ -108,7 +110,7 @@ const TeamSelector = (props) => {
 
                 <header className="rounded-t-lg  bg-emerald-900 text-white py-2">
                     <h5 className="text-2xl font-semibold text-center">
-                        Players
+                        {t`players`}
                     </h5>
                 </header>
                 <ul
@@ -130,8 +132,9 @@ const TeamSelector = (props) => {
 
         <div className="absolute bottom-0 right-0 p-4 w-full text-right">
             <button
+                disabled={!teams.every(t => t.players.length > 0)}
                 onClick={() => onSubmit(teams)}
-                className="shadow-lg bg-emerald-700 rounded-lg px-6 py-4 text-xl font-semibold text-white">
+                className="shadow-lg bg-emerald-700 rounded-lg px-6 py-4 text-xl font-semibold text-white disabled:bg-gray-400">
                 Validate
             </button>
         </div>

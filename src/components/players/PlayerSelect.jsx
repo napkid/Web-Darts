@@ -75,7 +75,7 @@ const PlayerSelect = props => {
         <div className="absolute bottom-0 py-4">
             <button
                 onClick={handleNext}
-                className="px-4 py-2 bg-blue-500 font-semibold text-white rounded-lg"
+                className="px-4 py-2 bg-emerald-500 font-semibold text-white rounded-lg"
             >
                 {t`choose-game`}
             </button>

@@ -3,6 +3,7 @@ import { Link, Route } from 'wouter'
 import clsx from 'clsx'
 import { categories, games, gamesByCat } from "../config/games"
 import { useTranslation } from '../hooks/i18n'
+import { useGlobalState } from '../hooks/useGlobalState'
 
 
 const GameSelect = props => {
@@ -10,6 +11,8 @@ const GameSelect = props => {
     const {
         t
     } = useTranslation()
+
+    const [players] = useGlobalState('players')
 
     return <div className="px-2 py-4 h-full flex flex-col justify-center">
 
@@ -40,8 +43,9 @@ const GameSelect = props => {
                 {gamesByCat[params.id].map(g => <li>
                     <Link href={`/game/${g.value}`}>
                         <button
+                            disabled={g.minPlayers > players.length}
                             type="button"
-                            className="w-full rounded-lg border border-transparent bg-emerald-600 px-6 py-3 text-xl font-semibold text-white shadow-xl hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+                            className="w-full rounded-lg border border-transparent bg-emerald-600 px-6 py-3 text-xl font-semibold text-white shadow-xl hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:bg-gray-500"
                         >
                             {g.label}
                         </button>

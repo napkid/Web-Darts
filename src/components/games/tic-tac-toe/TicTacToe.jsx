@@ -6,6 +6,7 @@ import DescriptionList from '../../DescriptionList.jsx'
 import { useTranslation } from '../../../hooks/i18n.jsx'
 import DartButton from '../../DartButton.jsx'
 import WinnerModal from '../../WinnerModal.jsx'
+import StartNumberPicker from './StartNumberPicker.jsx'
 
 
 const winningCombinations = [
@@ -22,17 +23,28 @@ const winningCombinations = [
 const getInitialGameState = (startNumber) => ({
     turnCount: 0,
     board: Array(3).fill(Array(3).fill(null))
-        .map((r, rowIdx) => r.map((n, colIdx) => ({
-            value: startNumber+3*rowIdx+colIdx,
-            shots: {
-                circle: 0,
-                cross: 0
-            }
-        })))
+        .map((r, rowIdx) => r.map((n, colIdx) => {
+            const value = startNumber+3*rowIdx+colIdx
+            return ({
+                value: value > 20 ? value - 20 : value,
+                shots: {
+                    circle: 0,
+                    cross: 0
+                }
+            })
+        }))
 })
 
 const TicTacToeGame = props => {
-    const startNumber = 1
+
+    const [gameState, setGameState] = useState(null)
+    const handleStartNumber = n => {
+        setGameState(getInitialGameState(n))
+    }
+
+    if(gameState === null){
+        return <StartNumberPicker onPick={n => handleStartNumber(n)} />
+    }
 
     // const {
     //     teams
@@ -41,7 +53,6 @@ const TicTacToeGame = props => {
     const teams = props.teams
     
 
-    const [gameState, setGameState] = useState(getInitialGameState(startNumber))
 
     const [keyboardOpen, setKeyboardOpen] = useState(false)
 
@@ -72,7 +83,7 @@ const TicTacToeGame = props => {
         })
     }
 
-    const reset = () => setGameState(getInitialGameState(startNumber))
+    const reset = () => setGameState(null)
 
 
     const checkWinner = () => ['cross', 'circle'].find(symbol => {
@@ -86,6 +97,8 @@ const TicTacToeGame = props => {
     })
 
     const winner = checkWinner()
+
+   
 
     return <div className="px-2 py-4 h-full relative">
 

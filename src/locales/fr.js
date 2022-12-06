@@ -6,6 +6,7 @@ export default {
     'player': 'Joueur',
     'turn': 'Tour',
     'score': 'Score',
+    'team': 'Équipe',
     'victory': 'Victoire',
     'player-won': name => `${name} a gagné !`,
     'restart': 'Recommencer',
@@ -14,5 +15,8 @@ export default {
     'circle': 'Rond',
     'team-win': team => `L'équipe ${team} a gagné !`,
     'choose-game': 'Choix du jeu',
-    'exit': 'Quitter'
+    'exit': 'Quitter',
+    'pick-start-number': 'Choisir un nombre',
+    'circle': 'Rond',
+    'cross': 'Croix'
 }
