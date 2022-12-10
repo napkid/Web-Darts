@@ -124,7 +124,7 @@ const TicTacToeGame = props => {
         <div className="mt-4 relative z-0">
 
             <GameBoard
-                teamCount={teams.length}
+                teams={teams}
                 state={gameState.board}
             />
         </div>

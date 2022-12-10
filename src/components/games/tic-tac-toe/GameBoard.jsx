@@ -41,19 +41,13 @@ const Grid = props => {
     </>
 }
 
-const symbols = [
-    'cross',
-    'circle',
-    'triangle'
-]
-
 const GameBoard = props => {
     const {
-        teamCount,
+        teams,
         state
     } = props
     const step = 16
-    const smallSymbolSize = step/teamCount
+    const smallSymbolSize = step/teams.length
 
     return <div className="bg-emerald-600 p-4 rounded-lg">
         <svg strokeLinecap="round" className="w-full h-full" viewBox="0 0 48 48" >
@@ -94,24 +88,16 @@ const GameBoard = props => {
                         /* Big display */
                         ? <GameSymbol symbol={box.owner} x={boxIdx*step} y={rowIdx*step} width={16} height={16} />
                         /* Small displays */
-                        : symbols.map((sym, symIdx) => Array(box.shots[sym]||0)
+                        : teams.map((t, tIdx) => Array(box.shots[t.id]||0)
                             .fill(null)
                             .map((c, idx) => <GameSymbol
-                                symbol={sym}
-                                x={symIdx*smallSymbolSize+boxIdx*step}
+                                symbol={t.id}
+                                x={tIdx*smallSymbolSize+boxIdx*step}
                                 y={idx*smallSymbolSize+rowIdx*step}
                                 width={smallSymbolSize}
                                 height={smallSymbolSize}
                             />)
                         )
-                        // [
-                        //     Array(box.shots.circle).fill(null).map((c, idx) => <Circle key={'circle-'+idx}
-                        //         x={boxIdx*step} y={idx*smallSymbolSize+rowIdx*step} width={smallSymbolSize} height={smallSymbolSize} />
-                        //     ),
-                        //     Array(box.shots.cross).fill(null).map((c, idx) => <Cross key={'cross-'+idx}
-                        //         x={smallSymbolSize+boxIdx*step} y={idx*smallSymbolSize+rowIdx*step} width={smallSymbolSize} height={smallSymbolSize} />
-                        //     )
-                        // ]
                     }
 
                     
