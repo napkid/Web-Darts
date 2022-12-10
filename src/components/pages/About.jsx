@@ -98,6 +98,7 @@ const About = () => {
                 <li>Gaylor</li>
                 <li>Axou</li>
                 <li>Bouky</li>
+                <li>Anto</li>
                 <li>Quentinus</li>
             </ul>
         </Modal>}
