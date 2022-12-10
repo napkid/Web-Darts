@@ -11,6 +11,7 @@ import useTranslation from '../../../hooks/i18n'
 import DescriptionList from '../../common/DescriptionList'
 import DartButton from '../common/DartButton'
 import DartKeyboard from '../common/DartKeyboard'
+import WinnerModal from '../common/WinnerModal'
 
 const PlayerDisplay = props => {
 
