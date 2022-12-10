@@ -40,5 +40,6 @@ export default {
     'validate': 'Valider',
     'random': 'Aléatoire',
     'start-number': 'Nombre de départ',
-    'team-up': 'Équipes'
+    'team-up': 'Équipes',
+    'par': 'Égalité !'
 }

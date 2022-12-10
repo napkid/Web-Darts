@@ -62,16 +62,21 @@ const TicTacToeGame = props => {
     const currentPlayerIndex = Math.floor(gameState.turnCount/teams.length) % currentTeam.players.length
     const currentPlayer = currentTeam.players[currentPlayerIndex]
 
-
+    
     const checkWinner = () => teams.find(t => {
         const completedBoxes = gameState.board
             .flatMap(row => row)
             .map((box, idx) => box.owner === t.id ? idx : null)
+        
         return winningCombinations
             .findIndex(combination => combination
                 .every(boxIdx => completedBoxes.includes(boxIdx))
             ) >= 0
     })
+
+    const checkPar = () => gameState.board
+        .flatMap(row => row)
+        .every(box => !!box.owner)
 
     console.log(gameState);
     console.log(teams);
@@ -112,6 +117,7 @@ const TicTacToeGame = props => {
 
     
     const winner = checkWinner()
+    const isPar = checkPar()
 
    
 
@@ -134,6 +140,12 @@ const TicTacToeGame = props => {
 
             {winner && <WinnerModal 
                 text={t('team-win', t(winner.id))}
+                onRestart={reset}
+                onExit={() => navigate('/')}
+            />}
+
+            {isPar && <WinnerModal 
+                text={t`par`}
                 onRestart={reset}
                 onExit={() => navigate('/')}
             />}

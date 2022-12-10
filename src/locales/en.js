@@ -36,5 +36,6 @@ export default {
     'pick-start-number': 'Pick a number',
     'random': 'Random',
     'start-number': 'Start number',
-    'team-up': 'Team up'
+    'team-up': 'Team up',
+    'par': 'Par !'
 }
