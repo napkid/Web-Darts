@@ -1,1 +1,0 @@
-const r={fr:"French",en:"English","start-game":"Start game",players:"Players",player:"Player",turn:"Turn",score:"Score",victory:"Victory","player-won":e=>`${e} won !`,restart:"Restart","player-placeholder":"Player name...",cross:"Cross",circle:"Circle","team-win":e=>`Team ${e} won !`,"choose-game":"Choose your game"};export{r as default};
