@@ -6,7 +6,7 @@ const BackGround = props => {
         colorEnd
     } = props
 
-    return <svg className="h-full " xmlns='http://www.w3.org/2000/svg' width='100%'>
+    return <svg className="h-full -z-20" xmlns='http://www.w3.org/2000/svg' width='100%'>
         <defs>
             <linearGradient id='a' gradientUnits='userSpaceOnUse' x1='0' x2='0' y1='0' y2='100%' gradientTransform='rotate(277,640,646)'>
                 <stop offset='0'  stop-color='#064e3b'/>

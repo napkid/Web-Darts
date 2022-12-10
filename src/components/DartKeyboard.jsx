@@ -1,28 +1,41 @@
 import React, { useState } from 'react'
 import clsx from "clsx"
+import Button from './Button'
+import { useTranslation } from '../hooks/i18n'
 
 
-const keys = [
-    ...Array(20).fill(null).map((n, idx) => ({
-        label: `${idx+1}`,
-        value: idx+1,
-        maxCount: 3
-    })),
-    {
+const fullMatrix = [
+    ...Array(5).fill(null)
+        .map((n, rowIdx) => Array(4).fill(null)
+            .map((n, colIdx) => ({
+                label: `${1+rowIdx*4+colIdx}`,
+                value: 1+rowIdx*4+colIdx,
+                maxCount: 3
+            }))),
+    [{
         label: 'BULL',
         value: 25,
         maxCount: 2
-    }
+    }]
 ]
 
-const dartCount = 3
+const defaultDartCount = 3
 
-const DartKeyboard = props => {
+const DartKeyboard = (props) => {
     const {
         onSubmit,
         onExit,
         open,
+        matrix,
+        disallowEmpty,
+        dartCount: propsDartCount
     } = props
+
+    const dartCount = propsDartCount || defaultDartCount
+
+    const keyMatrix = matrix || fullMatrix
+
+    const { t } = useTranslation()
 
     const [state, setState] = useState([])
 
@@ -44,6 +57,9 @@ const DartKeyboard = props => {
     }
 
     const handleSubmit = () => {
+        if(disallowEmpty && state.length === 0){
+            return
+        }
         onSubmit({
             shots: state,
             score
@@ -52,50 +68,62 @@ const DartKeyboard = props => {
     }
 
 
-    return <div className={clsx('transition-all ease-in absolute bottom-0 left-0 shadow-xl w-full max-h-0 overflow-hidden', {
+    return <div className={clsx('transition-all ease-in absolute z-50 bottom-0 left-0 shadow-xl w-full max-h-0 overflow-hidden', {
         'max-h-full': open
     })}>
-        <div className="w-full rounded-t-xl bg-emerald-500">
-            <div className="rounded-t-xl bg-yellow-100 text-xl text-center py-2 font-semibold mb-4">
+        <div className="w-full px-4 py-4 rounded-t-xl bg-emerald-500">
+            {/* <div className="rounded-t-xl bg-yellow-100 text-xl text-center py-2 font-semibold mb-4">
                 <p>Total: {score}</p>
+            </div> */}
+            <div className="flex flex-col mb-4 relative z-0 space-y-4 mb-8">
+                {keyMatrix.map((row, idx) => <div key={idx} className="flex w-full space-x-4">
+                    {row.map(key => {
+                        const hitCount = countHitOnKey(key.value)
+                        return <Button
+                            key={key.value}
+                            color="gray"
+                            full
+                            rounded
+                            className={clsx('py-4',
+                                {
+                                    'hover:bg-white text-gray-600 bg-white': hitCount === 0,
+                                    'hover:bg-blue-400 bg-blue-400 text-white': hitCount === 1,
+                                    'hover:bg-yellow-400 bg-yellow-400 text-white': hitCount === 2,
+                                    'hover:bg-red-400 bg-red-400 text-white': hitCount === 3,
+                                    'hover:bg-blue-600 bg-blue-600 text-white': hitCount === 4,
+                                    'hover:bg-yellow-700 bg-yellow-700 bg-yellow-500 white': hitCount === 5,
+                                    'hover:bg-red-500 bg-red-500 text-white': hitCount === 6,
+                                    'hover:bg-blue-700 bg-blue-700 bg-orange-500 text-white': hitCount === 7,
+                                    'hover:bg-red-800 bg-red-500 text-white': hitCount === 8,
+                                    'hover:bg-gray-900 bg-gray-900 text-white': hitCount === 9
+                                }
+                            )}
+                            onClick={() => handleScore(key)}
+                        >
+                            {key.label}
+                        </Button>
+                    })}
+                </div>)}
             </div>
-            <div className="grid grid-cols-4 gap-3 px-4 mb-4">
-                {keys.map(key => {
-                    const hitCount = countHitOnKey(key.value)
-                    return <button
-                        className={clsx(
-                            {
-                                'bg-white': hitCount === 0,
-                                'bg-emerald-100 text-emerald-800': hitCount === 1,
-                                'bg-emerald-200 text-emerald-800': hitCount === 2,
-                                'bg-emerald-300 text-emerald-800': hitCount === 3,
-                                'bg-emerald-400 text-emerald-800': hitCount === 4,
-                                'bg-emerald-500 text-emerald-800': hitCount === 5,
-                                'bg-emerald-600 text-white': hitCount === 6,
-                                'bg-emerald-700 text-white': hitCount === 7,
-                                'bg-emerald-800 text-white': hitCount === 8,
-                                'bg-emerald-900 text-white': hitCount === 9
-                            },
-                            'w-full py-4 rounded-lg shadow-lg text-xl font-semibold',
-                        )}
-                        onClick={() => handleScore(key)}
-                    >
-                        {key.label}
-                    </button>
-                })}
-            </div>
 
-            <div className="px-2 py-2">
-
-                <button className="mr-4 px-4 py-2 bg-emerald-700 font-semibold text-white rounded-lg" onClick={handleSubmit}>
-                    OK
-                </button>
-
-                <button
-                    className="px-4 py-2 bg-gray-300 font-semibold text-gray-700 rounded-lg"
+            <div className="flex relative z-0 space-x-4">
+                <Button
+                    full
+                    color="gray"
+                    size="small"
+                    rounded
                     onClick={onExit}>
-                    Exit
-                </button>
+                    {t`cancel`}
+                </Button>
+
+                <Button 
+                    color="blue"
+                    size="small"
+                    full
+                    rounded
+                    onClick={handleSubmit}>
+                    {t`OK`}
+                </Button>
             </div>
         </div>
     </div>

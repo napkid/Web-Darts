@@ -3,6 +3,7 @@ import { useLocation } from 'wouter'
 
 import { useTranslation } from '../../hooks/i18n.jsx'
 import { useGlobalState } from '../../hooks/useGlobalState.jsx'
+import Button from '../Button.jsx'
 import PlayerForm from "../PlayerForm.jsx"
 
 const PlayerSelect = props => {
@@ -46,9 +47,9 @@ const PlayerSelect = props => {
 
     const [playerName, setPlayerName] = useState('')
 
-    return <div className="px-2 py-4 h-full flex flex-col justify-center">
+    return <div className="px-2 py-4 flex flex-col justify-center">
 
-        <h2 className="text-3xl font-semibold text-white text-center mb-4">
+        <h2 className="text-5xl font-semibold text-white text-center mb-8">
             {t`players`}
         </h2>
 
@@ -72,13 +73,12 @@ const PlayerSelect = props => {
             />
         </ul>
 
-        <div className="absolute bottom-0 py-4">
-            <button
-                onClick={handleNext}
-                className="px-4 py-2 bg-emerald-500 font-semibold text-white rounded-lg"
+        <div className="px-2 mt-12 w-full bottom-0 py-4 mx-auto">
+            <Button onClick={handleNext}
+                full size="small" rounded color="blue"
             >
                 {t`choose-game`}
-            </button>
+            </Button>
         </div>
     </div>
 }

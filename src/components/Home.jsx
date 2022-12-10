@@ -1,15 +1,31 @@
 import { Link } from 'wouter'
 import { useTranslation } from "../hooks/i18n"
 
+import logo from '../assets/logo.svg'
+import Button from './Button'
+
 const Home = () => {
 
     const { t } = useTranslation()
 
-    return <div className="h-full flex justify-center items-center">
+    return <div className="h-full space-y-8 flex flex-col justify-center items-center">
+
+
+        <img
+            className="w-1/2"
+            src={logo} alt="Web Darts logo"
+        />
+        
+
         <Link to="/players">
-            <button className="px-6 py-6 rounded-full bg-emerald-500 border border-emerald-800 hover:bg-emerald-500 shadow text-white font-semibold uppercase text-2xl">
+            <Button pill size="big" color="green">
                 {t`start-game`}
-            </button>
+            </Button>
+        </Link>
+        <Link to="/about">
+            <Button pill size="big" color="gray">
+                {t`about`}
+            </Button>
         </Link>
     </div>
 }

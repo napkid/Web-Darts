@@ -40,7 +40,7 @@ export const scoreGames = [{
 }]
 
 export const specialGames = [{
-    label: 'Tic-Tac-Toe',
+    label: 'tic-tac-toe',
     value: 'tic-tac-toe',
     component: TicTacToeGame,
     minPlayers: 2,
@@ -51,11 +51,13 @@ export const specialGames = [{
         id: 'circle',
         name: 'circle'
     }]
-}, {
-    label: 'Cricket',
-    minPlayers: 2,
-    value: 'cricket'
-}]
+},
+// {
+//     label: 'Cricket',
+//     minPlayers: 2,
+//     value: 'cricket'
+// }
+]
 
 export const gamesByCat = {
     'cricket': specialGames,

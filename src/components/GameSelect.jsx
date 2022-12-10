@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import { categories, games, gamesByCat } from "../config/games"
 import { useTranslation } from '../hooks/i18n'
 import { useGlobalState } from '../hooks/useGlobalState'
+import Button from './Button'
 
 
 const GameSelect = props => {
@@ -16,39 +17,33 @@ const GameSelect = props => {
 
     return <div className="px-2 py-4 h-full flex flex-col justify-center">
 
-        <h2 className="text-3xl text-white font-semibold text-center mb-4">
+        <h2 className="text-4xl uppercase text-white font-semibold text-center mb-4">
             {t`choose-game`}
         </h2>
         <Route path="/game-selection/">
-            <ul className="px-4 mb-4 space-y-4 ">
+            <ul className="px-4 mb-4 space-y-8">
                 {categories.map(game => <li>
-                    <Link href={`/game-selection/${game.value}`}>
-                        <button
-                            className={clsx(
-                                'bg-gradient-to-t uppercase shadow-xl w-full px-6 py-4 font-semibold border border-gray-500 text-2xl text-white rounded-lg',
-                                {
-                                    'from-yellow-600 to-yellow-400': game.colorClass === 'yellow',
-                                    'from-red-800 to-red-600': game.colorClass === 'red'
-                                }
-                            )}
-                        >
+                    <Link key={game.value} href={`/game-selection/${game.value}`}>
+                        <Button color={game.colorClass} size="big" rounded full>
                             {game.label}
-                        </button>
+                        </Button>
                     </Link>
                 </li>)}
             </ul>
         </Route>
         <Route path="/game-selection/:id">
-            {params => <ul className="grid grid-cols-2 gap-2 mb-4">
+            {params => <ul className="px-4 mb-4 space-y-4 mb-4">
                 {gamesByCat[params.id].map(g => <li>
-                    <Link href={`/game/${g.value}`}>
-                        <button
+                    <Link key={g.value} href={`/game/${g.value}`}>
+                        <Button
+                            rounded
+                            color="green"
+                            size="small"
+                            full
                             disabled={g.minPlayers > players.length}
-                            type="button"
-                            className="w-full rounded-lg border border-transparent bg-emerald-600 px-6 py-3 text-xl font-semibold text-white shadow-xl hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 disabled:bg-gray-500"
                         >
-                            {g.label}
-                        </button>
+                            {t(g.label)}
+                        </Button>
                     </Link>
                 </li>)}
             </ul>}

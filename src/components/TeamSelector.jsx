@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import clsx from "clsx"
 import useDraggable from "../hooks/useDraggable"
 import { useTranslation } from '../hooks/i18n'
+import Button from './Button'
+import { blockStyle } from '../style'
 
 
 const PlayerDisplay = props => {
@@ -18,9 +20,9 @@ const PlayerDisplay = props => {
 
     return <li
         ref={ref}
-        className={clsx('touch-none w-full rounded-lg text-xl font-semibold shadow text-white bg-emerald-500 px-6 py-4 mb-2',
+        className={clsx('relative z-50 touch-none w-full rounded-lg text-xl font-semibold shadow text-white bg-emerald-500 px-6 py-4 mb-2',
         {
-            'pointer-events-none': pressed
+            'pointer-events-none': pressed,
         })}
     >
         {name}
@@ -74,16 +76,33 @@ const TeamSelector = (props) => {
         setDragging(false)
     }
 
-    return <div className="relative select-none h-full">
-        <div className="p-4">
+    return <div className="relative select-none min-h-full pb-12">
+        <div className="p-4 text-center">
 
-            {teams.map(team => <div className="mb-4 border border-emerald-600 rounded-lg">
-                <header className="shadow-lg rounded-t-lg bg-emerald-900 text-white py-2">
-                    <h5 className="text-2xl font-semibold text-center">
-                        {t(team.name)}
-                    </h5>
-                </header>
-                <ul className={clsx('h-full bg-emerald-600 px-8 py-4 rounded-b-lg')}
+            <h1 className="text-5xl mb-8">
+                {t`team-up`}
+            </h1>
+
+            {teams.map(team => <div key={team.id} className={clsx(
+                'mb-4',
+                blockStyle.base,
+                blockStyle.rounded,
+                blockStyle.colors.green
+            )}>
+                <div className="relative z-20">
+
+                    <header className={clsx(
+                        blockStyle.base,
+                        blockStyle.rounded,
+                        blockStyle.colors.green,
+                        'shadow-lg rounded-t-lg bg-emerald-700 text-white py-2',
+                    )}>
+                        <h5 className="text-2xl font-semibold text-center">
+                            {t(team.name)}
+                        </h5>
+                    </header>
+                </div>
+                <ul className={clsx('h-full bg-emerald-400 px-8 py-4 rounded-b-lg')}
                     onPointerEnter={() => setZone(team.id)}
                     onPointerLeave={() => setZone(null)}
                 >
@@ -91,6 +110,7 @@ const TeamSelector = (props) => {
                         .map(player => <>
 
                             <PlayerDisplay
+                                key={player.id}
                                 onDrag={() => setDragging(true)}
                                 onDrop={() => handleDrop(player)}
                                 name={player.name}
@@ -101,20 +121,33 @@ const TeamSelector = (props) => {
                         team.players.length === 0
                         || teams.reduce((c, t) => c+t.players.length, 0) < players.length
                     )
-                        && <li className="h-12 border-2 border-dashed">
+                        && <li className="h-12 border-2 border-dashed border-emerald-600 rounded-lg">
                     </li>}
                 </ul>
             </div>)}
             
-            <div className="mb-4 border border-emerald-600 rounded-lg">
+            <div className={clsx(
+                blockStyle.base,
+                blockStyle.rounded,
+                blockStyle.colors.green,
+                'mb-4'
+            )}>
 
-                <header className="rounded-t-lg  bg-emerald-900 text-white py-2">
-                    <h5 className="text-2xl font-semibold text-center">
+                <div className="relative z-20">
+
+                    <header className={clsx(
+                        blockStyle.base,
+                        blockStyle.rounded,
+                        blockStyle.colors.green,
+                        'shadow-lg rounded-t-lg bg-emerald-700 text-white py-2',
+                    )}>
+                        <h5 className="text-2xl font-semibold text-center">
                         {t`players`}
-                    </h5>
-                </header>
+                        </h5>
+                    </header>
+                </div>
                 <ul
-                    className={clsx('h-full bg-emerald-600 px-8 py-4 rounded-b-lg')}
+                    className={clsx('h-full bg-emerald-400 px-8 py-4 rounded-b-lg')}
                     onPointerUp={() => handleDrop()}
                 >
                     {players.filter(player => teams
@@ -122,22 +155,30 @@ const TeamSelector = (props) => {
                             .includes(player)
                         ) === -1
                     ).map(player => <PlayerDisplay
+                        key={player.id}
                         onDrag={() => setDragging(player)}
                         onDrop={() => handleDrop(player)}
                         name={player.name}
                     />)}
                 </ul>
             </div>
+            <div className="z-50 bottom-0 right-0 fixed w-full ">
+
+                <div className="container max-w-md mx-auto p-4">
+                    <Button
+                        size="small"
+                        color="blue"
+                        full
+                        rounded
+                        disabled={!teams.every(t => t.players.length > 0)}
+                        onClick={() => onSubmit(teams)}
+                    >
+                        {t`validate`}
+                    </Button>
+                </div>
+            </div>
         </div>
 
-        <div className="absolute bottom-0 right-0 p-4 w-full text-right">
-            <button
-                disabled={!teams.every(t => t.players.length > 0)}
-                onClick={() => onSubmit(teams)}
-                className="shadow-lg bg-emerald-700 rounded-lg px-6 py-4 text-xl font-semibold text-white disabled:bg-gray-400">
-                Validate
-            </button>
-        </div>
 
     </div>
 }

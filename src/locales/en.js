@@ -1,7 +1,8 @@
 export default {
     'fr': 'French',
     'en': 'English',
-    'start-game': 'Start game',
+    'start-game': 'Start',
+    'about': 'About',
     'players': 'Players',
     'player': 'Player',
     'turn': 'Turn',
@@ -13,5 +14,22 @@ export default {
     'cross': 'Cross',
     'circle': 'Circle',
     'team-win': team => `Team ${team} won !`,
-    'choose-game': 'Choose your game'
+    'choose-game': 'Choose your game',
+    'tic-tac-toe': 'Tic Tac Toe',
+    'for-my-friends': 'For my friends',
+    'made-with-heart': 'Made with ☕, ❤️ and 💻 in La Rochelle, France',
+    'free-oss': 'This app is free (as in "free beer" AND as in "free speech") and open-source',
+    'check-code-link': '(check the code out !)',
+    'licensing': 'Licensing',
+    'gnu-agpl': 'Code is licensed under the GNU AGPL version 3',
+    'web-darts-logo-graphics': 'Web Darts (logo & graphics)',
+    'by': 'by',
+    'is-licensed-under': 'is licensed under',
+    'cancel': 'Cancel',
+    'ok': 'OK',
+    'validate': 'Validate',
+    'pick-start-number': 'Pick a number',
+    'random': 'Random',
+    'start-number': 'Start number',
+    'team-up': 'Team up'
 }

@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  color-scheme: dark only;
+}
+
+@font-face {
+    font-family: 'Coaster';
+    src: url('../assets/COASBL__.TTF');
+    font-weight: bold;
+    font-style: normal;
+}
+
+html {
+    font-family: Coaster;
+    text-transform: uppercase;
+}
+
+input,
+textarea,
+button,
+select,
+a {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}

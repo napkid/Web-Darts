@@ -1,5 +1,6 @@
 import { useState } from "preact/hooks"
 import { useTranslation } from "../../../hooks/i18n"
+import Button from "../../Button"
 import DartKeyboard from "../../DartKeyboard"
 
 
@@ -17,14 +18,39 @@ const StartNumberPicker = props => {
 
     const [keyboardOpen, setKeyboardOpen] = useState(false)
 
-    return <div className="h-full flex justify-center items-center">
-        <button
-            onClick={() => setKeyboardOpen(!keyboardOpen)}
-            className="px-6 py-6 rounded-full bg-emerald-500 border border-emerald-800 hover:bg-emerald-500 shadow text-white font-semibold uppercase text-2xl">
+    return <div className="text-center relative h-full flex flex-col space-y-8 justify-center items-center">
+        <h1 className="text-5xl">
+            {t`start-number`}
+        </h1>
+        
+        <Button
+            pill
+            size="big"
+            color="green"
+            onClick={() => setKeyboardOpen(!keyboardOpen)}>
             {t`pick-start-number`}
-        </button>
+        </Button>
+
+        <Button
+            pill
+            size="big"
+            color="red"
+            onClick={() => onPick(1+Math.round(Math.random()*19))}>
+                <div className="flex">
+                    <svg viewBox="0 0 24 24"  className="mr-2 w-10 h-10" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+                        <g id="media-player" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                            <g id="random" fill="currentColor">
+                                <path d="M4,17 C3.44771525,17 3,16.5522847 3,16 C3,15.4477153 3.44771525,15 4,15 L6,15 L9,12 L6,9 L4,9 C3.45000005,9 3,8.55245148 3,8.00122564 C3,7.44999981 3.45000005,7 4,7 L7,7 L11,11 L15,7 L17,7 L17,5 L21,8.00122564 L17,11 L17,9 L16,9 L13,12 L16,15 L17,15 L17,13 L21,16 L17,19 L17,17 L15,17 L11,13 L7,17 L4,17 Z" id="Shape"></path>
+                            </g>
+                        </g>
+                    </svg>
+                    {t`random`}
+                </div>
+        </Button>
 
         <DartKeyboard
+            dartCount={1}
+            disallowEmpty
             open={keyboardOpen}
             onSubmit={handlePick}
             onExit={() => setKeyboardOpen(false)}

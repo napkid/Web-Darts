@@ -71,7 +71,7 @@ const GameBoard = props => {
 
             <Grid />
             {state.map((row, rowIdx) => row.map((box, boxIdx) => {
-                return <>
+                return <g key={""+rowIdx+boxIdx}>
                     <text
                         x={(boxIdx)*step+step/2}
                         y={(rowIdx)*step+step/2}
@@ -81,24 +81,24 @@ const GameBoard = props => {
                     >
                         {box.value}
                     </text>
-                    {box.shots.circle >= 3 || box.shots.cross >= 3
+                    {box.owner
                         /* Big display */
-                        ? box.shots.circle >= 3
+                        ? box.owner === 'circle'
                             ? <Circle x={boxIdx*step} y={rowIdx*step} width={16} height={16} />
                             : <Cross x={boxIdx*step} y={rowIdx*step} width={16} height={16} />
                         /* Small displays */
                         : [
-                            Array(box.shots.circle).fill(null).map((c, idx) => <Circle
+                            Array(box.shots.circle).fill(null).map((c, idx) => <Circle key={'circle-'+idx}
                                 x={boxIdx*step} y={idx*smallSymbolSize+rowIdx*step} width={smallSymbolSize} height={smallSymbolSize} />
                             ),
-                            Array(box.shots.cross).fill(null).map((c, idx) => <Cross
+                            Array(box.shots.cross).fill(null).map((c, idx) => <Cross key={'cross-'+idx}
                                 x={smallSymbolSize+boxIdx*step} y={idx*smallSymbolSize+rowIdx*step} width={smallSymbolSize} height={smallSymbolSize} />
                             )
                         ]
                     }
 
                     
-                </>
+                </g>
             }))}
         </svg>
     </div>

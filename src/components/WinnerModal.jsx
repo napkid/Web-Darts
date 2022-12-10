@@ -1,4 +1,6 @@
 import { useTranslation } from "../hooks/i18n"
+import Button from "./Button"
+import Modal from "./Modal"
 
 
 const WinnerModal = props => {
@@ -12,39 +14,35 @@ const WinnerModal = props => {
         t
     } = useTranslation()
 
-    return <div className="fixed top-0 left-0 w-full h-full">
-        <div className="absolute z-40 top-0 left-0 h-full w-full opacity-50 bg-emerald-900">
-        </div>
-        <div className="absolute z-50 top-0 left-0 w-full h-full flex justify-center items-center">
-            
-        <div className="bg-emerald-600 border-emerald-800 shadow-xl w-2/3 rounded-lg py-8 px-4 text-center text-white">
-
-            <h5 className="text-3xl font-semibold mb-8">
+    return <Modal onExit={onExit}>
+        <h5 className="text-3xl font-semibold mb-8">
                 {text}
             </h5>
-            <div className="flex flex-wrap w-full space-y-4 sm:space-y-0">
+            <div className="relative z-0 flex flex-wrap w-full space-y-4 sm:space-y-0">
                 <div className="px-2 w-full sm:w-1/2">
-                    <button
-                        className="bg-emerald-800 py-4 px-6 rounded-lg text-white font-semibold text-xl"
+                    <Button
+                        size="small"
+                        color="blue"
+                        rounded
                         onClick={onRestart}
                     >
                         {t`restart`}
-                    </button>
+                    </Button>
 
                 </div>
                 <div className="px-2 w-full sm:w-1/2">
-                    <button
-                        className="bg-gray-400 py-4 px-6 rounded-lg text-white font-semibold text-xl"
-                        onClick={onRestart}
+                    <Button
+                        size="small"
+                        color="gray"
+                        rounded
+                        onClick={onExit}
                     >
                         {t`exit`}
-                    </button>
+                    </Button>
                 </div>
 
             </div>
-        </div>
-        </div>
-    </div>
+    </Modal>
 }
 
 export default WinnerModal

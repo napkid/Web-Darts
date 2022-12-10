@@ -5,6 +5,7 @@ import { useTranslation } from '../../../hooks/i18n.jsx'
 import DescriptionList from '../../DescriptionList.jsx'
 import DartButton from '../../DartButton.jsx'
 import WinnerModal from '../../WinnerModal.jsx'
+import { useLocation } from 'wouter'
 
 const PlayerDisplay = props => {
 
@@ -17,13 +18,13 @@ const PlayerDisplay = props => {
     return <div className={clsx(
         'rounded-lg h-24 shadow-lg bg-emerald-600 text-white flex flex-col justify-center',
         {
-            'ring-2 ring-emerald-500 ring-offset-2 ring-offset-transparent': selected
+            'ring-2 ring-yellow-500 ring-offset-2 ring-offset-transparent': selected
         }
     )}>
-        <p className="text-xl font-semibold text-center">
+        <p className="text-xl font-semibold text-center text-gray-300">
             {name}
         </p>
-        <p className="text-xl font-semibold text-center">
+        <p className="text-2xl font-semibold text-center">
             {score}
         </p>
     </div>
@@ -42,6 +43,8 @@ const X01Game = props => {
 
     const { t } = useTranslation()
 
+    const [, navigate] = useLocation()
+
     const reset  = () => {
         setGameState({
             turns: []
@@ -55,13 +58,21 @@ const X01Game = props => {
     const currentPlayer = players[currentPlayerIndex]
 
     const handleScore = data => {
+        const previousScore = getPlayerScore(currentPlayer.id)
+        const nextScore = previousScore-data.score
+        const score = nextScore < 0
+            ? 0
+            : data.score
         setGameState({
             ...gameState,
             turns: [
                 ...gameState.turns,
                 {
                     player: currentPlayer.id,
-                    data
+                    data: {
+                        ...data,
+                        score
+                    }
                 }
             ]
         })
@@ -84,22 +95,27 @@ const X01Game = props => {
 
     return <div className="py-4 px-2 h-full relative">
 
-        <h2 className="text-3xl text-center mb-4 font-bold text-white">
+        <h2 className="text-5xl text-center mb-4 font-bold text-white">
             {max}
         </h2>
         
         <ul className="grid grid-cols-2 gap-2 mb-6">
             {players.map(player => <PlayerDisplay
+                key={player.id}
                 selected={player.id === currentPlayer.id}
                 score={getPlayerScore(player.id)}
                 name={player.name}
             />)}
         </ul>
 
-        {winner && <WinnerModal 
-            text={t('player-won', winner.name)}
-            onRestart={reset}
-        />}
+        <div className="relative z-50">
+
+            {winner && <WinnerModal 
+                text={t('player-won', winner.name)}
+                onRestart={reset}
+                onExit={() => navigate('/')}
+            />}
+        </div>
 
         <DescriptionList
             items={[{

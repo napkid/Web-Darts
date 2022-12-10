@@ -17,9 +17,6 @@ const Layout = props => {
 
             </button>
           </a>
-            <h1 className="text-center font-bold text-2xl text-white">
-              DartsWeb
-            </h1>
 
           <div className="fixed right-0 p-4 top-0">
             {/* <LocaleSelector /> */}
