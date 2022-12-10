@@ -34,7 +34,7 @@ const About = () => {
             <p>{t`made-with-heart`}</p>
 
             <p>
-                {t`free-oss`} <a className="text-blue-400" href="#">
+                {t`free-oss`} <a className="text-blue-400" href="https://github.com/napkid/web-darts">
                     {t`check-code-link`}
                 </a>
             </p>
