@@ -22,10 +22,10 @@ const buttonStyles = {
             bg-red-500 \
             hover:bg-red-600 \
             before:bg-red-700',
-        yellow: 'border-yellow-600 \
-            bg-yellow-400 \
-            hover:bg-yellow-500 \
-            before:bg-yellow-600',
+        yellow: 'border-yellow-700 \
+            bg-yellow-500 \
+            hover:bg-yellow-600 \
+            before:bg-yellow-700',
         blue: 'border-blue-600 \
             bg-blue-500 \
             hover:bg-blue-600 \
@@ -62,10 +62,11 @@ const Button = props => {
         pill,
         color,
         children,
+        disabled,
         onClick
     } = props
 
-    return <button onClick={onClick} className={clsx(
+    return <button onClick={onClick} disabled={disabled} className={clsx(
         buttonStyles.base,
         {
             [buttonStyles.pill]: pill,

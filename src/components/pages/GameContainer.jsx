@@ -22,10 +22,12 @@ const GameContainer = () => {
 
     const [teams, setTeams] = useState(null)
 
-    return (!teams && currentGame.teams)
+    return (!teams && currentGame.minTeams)
         ? <TeamSelector
             players={players}
-            teamSettings={currentGame.teams}
+            availableTeams={currentGame.availableTeams}
+            minTeams={currentGame.minTeams}
+            maxTeams={currentGame.maxTeams}
             onSubmit={setTeams}
         />
         : <Game

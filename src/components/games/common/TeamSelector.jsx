@@ -35,25 +35,44 @@ const PlayerDisplay = props => {
     </li>
 }
 
+const makeInitialTeam = setting => ({
+    id: setting.id,
+    name: setting.name,
+    players: []
+})
+
 
 const TeamSelector = (props) => {
 
     const {
-        teamSettings,
+        availableTeams,
+        minTeams,
+        maxTeams,
         players,
         onSubmit
     } = props
 
     const { t } = useTranslation()
 
-    const [teams, setTeams] = useState(teamSettings.map(setting => ({
-        id: setting.id,
-        name: setting.name,
-        players: []
-    })))
+    const [teams, setTeams] = useState(
+        availableTeams.slice(0, minTeams)
+            .map(makeInitialTeam)
+    )
 
     const [dragging, setDragging] = useState(false)
     const [zone, setZone] = useState(null)
+
+    const isRemainingTeamsLeft = availableTeams[teams.length] && teams.length < maxTeams && players.length > teams.length
+    const handleAddTeam = () => {
+        if(isRemainingTeamsLeft){
+            setTeams([
+                ...teams,
+                makeInitialTeam(
+                    availableTeams[teams.length]
+                )
+            ])
+        }
+    }
 
     const handleDrop = (player) => {
         if(!dragging){
@@ -82,55 +101,71 @@ const TeamSelector = (props) => {
         setDragging(false)
     }
 
+    const notEmptyTeams = teams.filter(t => t.players.length > 0)
+
     return <div className="relative select-none min-h-full pb-12">
         <div className="p-4 text-center">
 
             <h1 className="text-5xl mb-8">
                 {t`team-up`}
             </h1>
+            <div className="space-y-4 mb-8">
+                {teams.map(team => <div key={team.id} className={clsx(
+                    'mb-4',
+                    blockStyle.base,
+                    blockStyle.rounded,
+                    blockStyle.colors.green
+                )}>
+                    <div className="relative z-20">
 
-            {teams.map(team => <div key={team.id} className={clsx(
-                'mb-4',
-                blockStyle.base,
-                blockStyle.rounded,
-                blockStyle.colors.green
-            )}>
-                <div className="relative z-20">
+                        <header className={clsx(
+                            blockStyle.base,
+                            blockStyle.rounded,
+                            blockStyle.colors.green,
+                            'shadow-lg rounded-t-lg bg-emerald-700 text-white py-2',
+                        )}>
+                            <h5 className="text-2xl font-semibold text-center">
+                                {t(team.name)}
+                            </h5>
+                        </header>
+                    </div>
+                    <ul className={clsx('h-full bg-emerald-400 px-8 py-4 rounded-b-lg')}
+                        onPointerEnter={() => setZone(team.id)}
+                        onPointerLeave={() => setZone(null)}
+                    >
+                        {team.players
+                            .map(player => <>
 
-                    <header className={clsx(
-                        blockStyle.base,
-                        blockStyle.rounded,
-                        blockStyle.colors.green,
-                        'shadow-lg rounded-t-lg bg-emerald-700 text-white py-2',
-                    )}>
-                        <h5 className="text-2xl font-semibold text-center">
-                            {t(team.name)}
-                        </h5>
-                    </header>
-                </div>
-                <ul className={clsx('h-full bg-emerald-400 px-8 py-4 rounded-b-lg')}
-                    onPointerEnter={() => setZone(team.id)}
-                    onPointerLeave={() => setZone(null)}
-                >
-                    {team.players
-                        .map(player => <>
+                                <PlayerDisplay
+                                    key={player.id}
+                                    onDrag={() => setDragging(true)}
+                                    onDrop={() => handleDrop(player)}
+                                    name={player.name}
+                                />
+                            </>)
+                        }
+                        {(
+                            team.players.length === 0
+                            || teams.reduce((c, t) => c+t.players.length, 0) < players.length
+                        )
+                            && <li className="h-12 border-2 border-dashed border-emerald-600 rounded-lg">
+                        </li>}
+                    </ul>
+                </div>)}
 
-                            <PlayerDisplay
-                                key={player.id}
-                                onDrag={() => setDragging(true)}
-                                onDrop={() => handleDrop(player)}
-                                name={player.name}
-                            />
-                        </>)
-                    }
-                    {(
-                        team.players.length === 0
-                        || teams.reduce((c, t) => c+t.players.length, 0) < players.length
-                    )
-                        && <li className="h-12 border-2 border-dashed border-emerald-600 rounded-lg">
-                    </li>}
-                </ul>
-            </div>)}
+                {isRemainingTeamsLeft && <div className="flex items-center justify-center">
+                    <Button
+                        rounded
+                        size="small"
+                        color="yellow"
+                        className="w-14 h-14 text-4xl"
+                        onClick={handleAddTeam}
+                    >
+                        +
+                    </Button>
+                </div>}
+            </div>
+
             
             <div className={clsx(
                 blockStyle.base,
@@ -176,8 +211,8 @@ const TeamSelector = (props) => {
                         color="blue"
                         full
                         rounded
-                        disabled={!teams.every(t => t.players.length > 0)}
-                        onClick={() => onSubmit(teams)}
+                        disabled={notEmptyTeams.length > maxTeams || notEmptyTeams.length < minTeams }
+                        onClick={() => onSubmit(notEmptyTeams)}
                     >
                         {t`validate`}
                     </Button>

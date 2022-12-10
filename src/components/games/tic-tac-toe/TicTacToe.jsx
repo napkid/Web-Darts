@@ -32,10 +32,7 @@ const getInitialGameState = (startNumber) => ({
             const value = startNumber+3*rowIdx+colIdx
             return ({
                 value: value > 20 ? value - 20 : value,
-                shots: {
-                    circle: 0,
-                    cross: 0
-                }
+                shots: {}
             })
         }))
 })
@@ -66,15 +63,18 @@ const TicTacToeGame = props => {
     const currentPlayer = currentTeam.players[currentPlayerIndex]
 
 
-    const checkWinner = () => ['cross', 'circle'].find(symbol => {
+    const checkWinner = () => teams.find(t => {
         const completedBoxes = gameState.board
             .flatMap(row => row)
-            .map((box, idx) => box.owner === symbol ? idx : null)
+            .map((box, idx) => box.owner === t.id ? idx : null)
         return winningCombinations
             .findIndex(combination => combination
                 .every(boxIdx => completedBoxes.includes(boxIdx))
             ) >= 0
     })
+
+    console.log(gameState);
+    console.log(teams);
 
 
     const handleScore = (data) => {
@@ -89,11 +89,11 @@ const TicTacToeGame = props => {
                     }
                     const shots = {
                         ...col.shots,
-                        [currentTeam.id]: col.shots[currentTeam.id]+1
+                        [currentTeam.id]: (col.shots[currentTeam.id] || 0)+1
                     }
 
-                    const owner = col.owner ?? ['cross', 'circle']
-                        .find(team => shots[team] >= 3)
+                    const owner = col.owner ?? teams
+                        .find(team => shots[team.id] >= 3)?.id
                         
 
                     return {
@@ -123,7 +123,8 @@ const TicTacToeGame = props => {
 
         <div className="mt-4 relative z-0">
 
-            <GameBoard 
+            <GameBoard
+                teamCount={teams.length}
                 state={gameState.board}
             />
         </div>
@@ -132,7 +133,7 @@ const TicTacToeGame = props => {
 
 
             {winner && <WinnerModal 
-                text={t('team-win', t(winner))}
+                text={t('team-win', t(winner.id))}
                 onRestart={reset}
                 onExit={() => navigate('/')}
             />}

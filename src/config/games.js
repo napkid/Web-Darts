@@ -10,12 +10,10 @@ export const categories = [{
     value: 'score',
     label: 'Score',
     colorClass: 'yellow'
-    // component: ScoreGame,
 }, {
     label: 'Cricket',
     value: 'cricket',
     colorClass: 'red'
-    // component: null
 }]
 
 export const scoreGames = [{
@@ -49,12 +47,17 @@ export const specialGames = [{
     value: 'tic-tac-toe',
     component: TicTacToeGame,
     minPlayers: 2,
-    teams: [{
+    minTeams: 2,
+    maxTeams: 3,
+    availableTeams: [{
         id: 'cross',
         name: 'cross'
     }, {
         id: 'circle',
         name: 'circle'
+    }, {
+        id: 'triangle',
+        name: 'triangle'
     }]
 },
 // {

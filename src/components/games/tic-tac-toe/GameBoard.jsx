@@ -3,29 +3,22 @@
 // WebDarts is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 // You should have received a copy of the GNU Affero General Public License along with WebDarts. If not, see <https://www.gnu.org/licenses/>. 
 
-const Cross = props => {
+
+const GameSymbol = props => {
     const {
         x,
         y,
         width,
-        height
+        height,
+        symbol
     } = props
+
     return <use
         width={width}
         height={height}
-        xlinkHref="#cross"
+        xlinkHref={`#${symbol}`}
         x={x} y={y}
     />
-}
-
-const Circle = props => {
-    const {
-        x,
-        y,
-        width,
-        height
-    } = props
-    return <use width={width} height={height} xlinkHref="#circle" x={x} y={y} />
 }
 
 const strokeClass = 'stroke-emerald-800'
@@ -48,13 +41,19 @@ const Grid = props => {
     </>
 }
 
+const symbols = [
+    'cross',
+    'circle',
+    'triangle'
+]
 
 const GameBoard = props => {
     const {
+        teamCount,
         state
     } = props
     const step = 16
-    const smallSymbolSize = step/2
+    const smallSymbolSize = step/teamCount
 
     return <div className="bg-emerald-600 p-4 rounded-lg">
         <svg strokeLinecap="round" className="w-full h-full" viewBox="0 0 48 48" >
@@ -63,6 +62,13 @@ const GameBoard = props => {
                         strokeWidth: 1
                     }} />
                 <line x1="14" x2="2" y1="2" y2="14" style={{
+                    strokeWidth: 1
+                }} />
+            </symbol>
+
+            <symbol id="triangle" viewBox="0 0 16 16" className="stroke-emerald-800">
+                <polygon points="2,14 8,2 14,14" style={{
+                    fill: 'none',
                     strokeWidth: 1
                 }} />
             </symbol>
@@ -86,18 +92,26 @@ const GameBoard = props => {
                     </text>
                     {box.owner
                         /* Big display */
-                        ? box.owner === 'circle'
-                            ? <Circle x={boxIdx*step} y={rowIdx*step} width={16} height={16} />
-                            : <Cross x={boxIdx*step} y={rowIdx*step} width={16} height={16} />
+                        ? <GameSymbol symbol={box.owner} x={boxIdx*step} y={rowIdx*step} width={16} height={16} />
                         /* Small displays */
-                        : [
-                            Array(box.shots.circle).fill(null).map((c, idx) => <Circle key={'circle-'+idx}
-                                x={boxIdx*step} y={idx*smallSymbolSize+rowIdx*step} width={smallSymbolSize} height={smallSymbolSize} />
-                            ),
-                            Array(box.shots.cross).fill(null).map((c, idx) => <Cross key={'cross-'+idx}
-                                x={smallSymbolSize+boxIdx*step} y={idx*smallSymbolSize+rowIdx*step} width={smallSymbolSize} height={smallSymbolSize} />
-                            )
-                        ]
+                        : symbols.map((sym, symIdx) => Array(box.shots[sym]||0)
+                            .fill(null)
+                            .map((c, idx) => <GameSymbol
+                                symbol={sym}
+                                x={symIdx*smallSymbolSize+boxIdx*step}
+                                y={idx*smallSymbolSize+rowIdx*step}
+                                width={smallSymbolSize}
+                                height={smallSymbolSize}
+                            />)
+                        )
+                        // [
+                        //     Array(box.shots.circle).fill(null).map((c, idx) => <Circle key={'circle-'+idx}
+                        //         x={boxIdx*step} y={idx*smallSymbolSize+rowIdx*step} width={smallSymbolSize} height={smallSymbolSize} />
+                        //     ),
+                        //     Array(box.shots.cross).fill(null).map((c, idx) => <Cross key={'cross-'+idx}
+                        //         x={smallSymbolSize+boxIdx*step} y={idx*smallSymbolSize+rowIdx*step} width={smallSymbolSize} height={smallSymbolSize} />
+                        //     )
+                        // ]
                     }
 
                     
