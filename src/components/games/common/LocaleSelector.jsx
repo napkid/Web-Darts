@@ -1,15 +1,16 @@
 import clsx from 'clsx'
 import { useState } from 'preact/hooks'
-import { useTranslation } from '../hooks/i18n'
-import Button from './Button'
+import useTranslation from '../../../hooks/i18n'
+import Button from '../../common/Button'
 
-const LocaleSelector = props => {
+const LocaleSelector = () => {
     const {
         t,
         currentLanguage,
         setLanguage,
         availableLanguages
     } = useTranslation()
+
     const [menuOpen, setMenuOpen] = useState(false)
 
     const handleLangChange = l => {

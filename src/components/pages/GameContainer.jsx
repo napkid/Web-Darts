@@ -1,12 +1,12 @@
 import { useState } from 'preact/hooks'
 import { useRoute } from 'wouter'
-import { games } from '../config/games.js'
+import { games } from '../../config/games.js'
 
-import { useGlobalState } from '../hooks/useGlobalState.jsx'
-import TeamSelector from "./TeamSelector.jsx"
+import useGlobalState from '../../hooks/useGlobalState.js'
+import TeamSelector from '../games/common/TeamSelector.jsx'
 
 
-const GameContainer = props => {
+const GameContainer = () => {
 
     const [players] = useGlobalState('players')
 

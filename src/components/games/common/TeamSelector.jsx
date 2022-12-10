@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import clsx from "clsx"
-import useDraggable from "../hooks/useDraggable"
-import { useTranslation } from '../hooks/i18n'
-import Button from './Button'
-import { blockStyle } from '../style'
+import clsx from 'clsx'
+import { useState } from 'preact/hooks'
+
+import useTranslation from '../../../hooks/i18n'
+import useDraggable from '../../../hooks/useDraggable'
+import { blockStyle } from '../../../style'
+import Button from '../../common/Button'
 
 
 const PlayerDisplay = props => {

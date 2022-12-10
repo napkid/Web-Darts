@@ -1,10 +1,5 @@
 
-const BackGround = props => {
-
-    const {
-        colorStart,
-        colorEnd
-    } = props
+const Background = props => {
 
     return <svg className="h-full -z-20" xmlns='http://www.w3.org/2000/svg' width='100%'>
         <defs>
@@ -56,4 +51,4 @@ const BackGround = props => {
     </svg>
 }
 
-export default BackGround
+export default Background

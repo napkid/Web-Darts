@@ -1,8 +1,8 @@
 import { Link } from 'wouter'
-import { useTranslation } from "../hooks/i18n"
+import useTranslation from '\.\./\.\./hooks/i18n'
 
-import logo from '../assets/logo.svg'
-import Button from './Button'
+import logo from '../../assets/logo.svg'
+import Button from '../common/Button'
 
 const Home = () => {
 

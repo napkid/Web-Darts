@@ -12,8 +12,6 @@ const persistedKeys = ['players', 'i18n']
 
 const globalReducer = (state, action) => {
 
-    console.log(state, action)
-
     const nextState = {...state}
     for(const key in reducers){
         if(action.type === 'init'){

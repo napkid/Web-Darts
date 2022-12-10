@@ -1,10 +1,11 @@
-import React from 'react'
-import Button from './Button'
-import logo from '../assets/logo.svg'
-import agplLogo from '../assets/agplv3-with-text-162x68.png'
 import { useState } from 'preact/hooks'
-import Modal from './Modal'
-import { useTranslation } from '../hooks/i18n'
+
+import logo from '../../assets/logo.svg'
+import agplLogo from '../../assets/agplv3-with-text-162x68.png'
+
+import useTranslation from '\.\./\.\./hooks/i18n'
+import Modal from '../common/Modal'
+import Button from '../common/Button'
 
 const About = () => {
 

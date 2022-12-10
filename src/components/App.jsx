@@ -1,33 +1,18 @@
 
-import { Link, Route, Switch, useLocation } from 'wouter'
+import { Link, Route, Switch } from 'wouter'
 
-import { games } from "../config/games.js"
-import { GlobalStateProvider, useGlobalState } from '../hooks/useGlobalState.jsx'
-import About from './About.jsx'
-import BackGround from "./Background.jsx"
-import Button from './Button.jsx'
-import GameContainer from "./GameContainer.jsx"
-import GameSelect from "./GameSelect.jsx"
-import Home from './Home.jsx'
-import LocaleSelector from './LocaleSelector.jsx'
-import PlayerSelect from "./players/PlayerSelect.jsx"
+import Background from './common/Background.jsx'
+import Button from './common/Button.jsx'
+import GlobalStateProvider from './common/GlobalStateProvider.jsx'
+import LocaleSelector from './games/common/LocaleSelector.jsx'
+import About from './pages/About.jsx'
+import GameContainer from './pages/GameContainer.jsx'
+import GameSelect from './pages/GameSelect.jsx'
+import Home from './pages/Home.jsx'
+import PlayerSelect from './pages/PlayerSelect.jsx'
 
 
 const App = () => {
-
-  const [location, navigate] = useLocation()
-
-  const handleNav = (e, to) => {
-    e.preventDefault()
-    setMenuOpen(false)
-    setState({
-      ...state,
-      step: to
-    })
-  }
-
-  const [state, dispatch] = useGlobalState()
-
 
   return <GlobalStateProvider>
       <div className="relative h-screen">
@@ -67,7 +52,7 @@ const App = () => {
             </main>
 
         </div>
-        <BackGround />
+        <Background />
       </div>
   </GlobalStateProvider>
 }

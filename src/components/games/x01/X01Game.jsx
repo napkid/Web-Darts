@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
-import clsx from "clsx"
-import DartKeyboard from "../../DartKeyboard.jsx"
-import { useTranslation } from '../../../hooks/i18n.jsx'
-import DescriptionList from '../../DescriptionList.jsx'
-import DartButton from '../../DartButton.jsx'
-import WinnerModal from '../../WinnerModal.jsx'
+import { useState } from 'preact/hooks'
+import clsx from 'clsx'
 import { useLocation } from 'wouter'
+
+import useTranslation from '../../../hooks/i18n'
+import DescriptionList from '../../common/DescriptionList'
+import DartButton from '../common/DartButton'
+import DartKeyboard from '../common/DartKeyboard'
 
 const PlayerDisplay = props => {
 

@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import clsx from "clsx"
-import Button from './Button'
-import { useTranslation } from '../hooks/i18n'
+import clsx from 'clsx'
+import { useState } from 'preact/hooks'
+import useTranslation from '../../../hooks/i18n'
 
+import Button from '../../common/Button'
 
 const fullMatrix = [
     ...Array(5).fill(null)

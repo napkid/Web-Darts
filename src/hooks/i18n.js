@@ -1,11 +1,11 @@
-import { useEffect, useRef, useCallback } from 'preact/hooks'
+import { useEffect, useCallback } from 'preact/hooks'
 import { availableLanguages, loadLocales, localeImportPath } from '../state/i18n'
-import { useGlobalState } from './useGlobalState'
+import useGlobalState from './useGlobalState'
 
 
 const dicts = {}
 
-export const useTranslation = () => {
+const useTranslation = () => {
 
     const [state, dispatch] = useGlobalState('i18n')
 
@@ -70,3 +70,5 @@ export const useTranslation = () => {
     }
 }
 
+
+export default useTranslation

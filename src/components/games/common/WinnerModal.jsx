@@ -1,6 +1,6 @@
-import { useTranslation } from "../hooks/i18n"
-import Button from "./Button"
-import Modal from "./Modal"
+import useTranslation from "../../../hooks/i18n"
+import Button from "../../common/Button"
+import Modal from "../../common/Modal"
 
 
 const WinnerModal = props => {

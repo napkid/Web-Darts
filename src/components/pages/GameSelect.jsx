@@ -1,10 +1,9 @@
 import { Link, Route } from 'wouter'
 
-import clsx from 'clsx'
-import { categories, games, gamesByCat } from "../config/games"
-import { useTranslation } from '../hooks/i18n'
-import { useGlobalState } from '../hooks/useGlobalState'
-import Button from './Button'
+import { categories, gamesByCat } from "../../config/games"
+import useTranslation from '\.\./\.\./hooks/i18n'
+import useGlobalState from '../../hooks/useGlobalState'
+import Button from '../common/Button'
 
 
 const GameSelect = props => {

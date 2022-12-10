@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
-import { useTranslation } from '../hooks/i18n'
-import Button from './Button'
+import useTranslation from '../../../hooks/i18n'
+import Button from '../../common/Button'
 
 const PlayerForm = props => {
 

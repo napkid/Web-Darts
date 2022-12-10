@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'preact/hooks'
+import { useState } from 'preact/hooks'
 import { useLocation } from 'wouter'
+import useTranslation from '../../hooks/i18n.js'
 
-import { useTranslation } from '../../hooks/i18n.jsx'
-import { useGlobalState } from '../../hooks/useGlobalState.jsx'
-import Button from '../Button.jsx'
-import PlayerForm from "../PlayerForm.jsx"
+import useGlobalState from '../../hooks/useGlobalState.js'
+import Button from '../common/Button.jsx'
+import PlayerForm from '../games/common/PlayerForm.jsx'
 
-const PlayerSelect = props => {
+const PlayerSelect = () => {
     
     const { t } = useTranslation()
 

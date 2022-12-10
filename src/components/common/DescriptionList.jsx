@@ -1,6 +1,5 @@
-import clsx from "clsx"
-import { blockStyle } from "../style"
-
+import clsx from 'clsx'
+import { blockStyle } from '../../style'
 
 
 const DescriptionList = props => {

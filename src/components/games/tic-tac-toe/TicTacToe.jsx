@@ -1,14 +1,13 @@
-import React, { useState } from 'react'
-import clsx from "clsx"
-import DartKeyboard from "../../DartKeyboard.jsx"
-import GameBoard from "./GameBoard.jsx"
-import DescriptionList from '../../DescriptionList.jsx'
-import { useTranslation } from '../../../hooks/i18n.jsx'
-import DartButton from '../../DartButton.jsx'
-import WinnerModal from '../../WinnerModal.jsx'
-import StartNumberPicker from './StartNumberPicker.jsx'
+import { useState } from 'preact/hooks'
 import { useLocation } from 'wouter'
 
+import useTranslation from '../../../hooks/i18n'
+import DescriptionList from '../../common/DescriptionList'
+import DartButton from '../common/DartButton'
+import DartKeyboard from '../common/DartKeyboard'
+import WinnerModal from '../common/WinnerModal'
+import GameBoard from './GameBoard'
+import StartNumberPicker from './StartNumberPicker'
 
 const winningCombinations = [
     [0, 1, 2],
