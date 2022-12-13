@@ -41,5 +41,6 @@ export default {
     'random': 'Aléatoire',
     'start-number': 'Nombre de départ',
     'team-up': 'Équipes',
-    'par': 'Égalité !'
+    'par': 'Égalité !',
+    '321-zap': '321 Zap'
 }

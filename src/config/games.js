@@ -40,6 +40,15 @@ export const scoreGames = [{
     props: {
         max: 701
     }
+}, {
+    value: '321-zap',
+    label: '321-zap',
+    component: X01Game,
+    minPlayers: 2,
+    props: {
+        max: 321,
+        zap: true
+    }
 }]
 
 export const specialGames = [{

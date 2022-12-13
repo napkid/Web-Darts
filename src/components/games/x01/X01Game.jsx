@@ -40,17 +40,22 @@ const X01Game = props => {
 
     const {
         players,
-        max
+        max,
+        zap
     } = props
 
     const [gameState, setGameState] = useState({
+        scores: players.reduce((s, p) => {
+            s[p.id] = max
+            return s
+        }, {}),
         turns: []
     })
-
+    
     const { t } = useTranslation()
 
     const [, navigate] = useLocation()
-
+    
     const reset  = () => {
         setGameState({
             turns: []
@@ -64,21 +69,32 @@ const X01Game = props => {
     const currentPlayer = players[currentPlayerIndex]
 
     const handleScore = data => {
-        const previousScore = getPlayerScore(currentPlayer.id)
+        const previousScore = gameState.scores[currentPlayer.id]
         const nextScore = previousScore-data.score
         const score = nextScore < 0
-            ? 0
-            : data.score
+            ? previousScore
+            : nextScore
+
+        const scores = {
+            ...gameState.scores,
+            [currentPlayer.id]: score
+        }
+
+        if(zap){
+            const zapped = players.filter(p => p.id !== currentPlayer.id)
+                .find(p => scores[p.id] === score)
+            if(zapped){
+                scores[zapped.id] = max
+            }
+        }
         setGameState({
             ...gameState,
+            scores,
             turns: [
                 ...gameState.turns,
                 {
                     player: currentPlayer.id,
-                    data: {
-                        ...data,
-                        score
-                    }
+                    data
                 }
             ]
         })
@@ -86,14 +102,8 @@ const X01Game = props => {
     }
 
 
-    const getPlayerScore = (playerId) => {
-        return max - gameState.turns
-            .filter(t => t.player === playerId)
-            .reduce((score, turn) => score+turn.data.score, 0)
-    }
-
     const checkWinner = () => {
-        const winner = players.find(p => getPlayerScore(p.id) === 0)
+        const winner = players.find(p => gameState.scores[p.id] === 0)
         return winner
     }
 
@@ -102,14 +112,14 @@ const X01Game = props => {
     return <div className="py-4 px-2 h-full relative">
 
         <h2 className="text-5xl text-center mb-4 font-bold text-white">
-            {max}
+            {t(`${max}${zap ? '-zap' : ''}`)}
         </h2>
         
         <ul className="grid grid-cols-2 gap-2 mb-6">
             {players.map(player => <PlayerDisplay
                 key={player.id}
                 selected={player.id === currentPlayer.id}
-                score={getPlayerScore(player.id)}
+                score={gameState.scores[player.id]}
                 name={player.name}
             />)}
         </ul>
@@ -132,7 +142,7 @@ const X01Game = props => {
                 description: currentPlayer.name
             }, {
                 title: t`score`,
-                description: getPlayerScore(currentPlayer.id)
+                description: gameState.scores[currentPlayer.id]
             }]}
         />
 

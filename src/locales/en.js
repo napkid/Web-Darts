@@ -37,5 +37,6 @@ export default {
     'random': 'Random',
     'start-number': 'Start number',
     'team-up': 'Team up',
-    'par': 'Par !'
+    'par': 'Par !',
+    '321-zap': '321 Zap'
 }
