@@ -5,9 +5,9 @@
 
 import { useState } from 'preact/hooks'
 
-import useTranslation from '../../../hooks/i18n'
-import Button from '../../common/Button'
-import DartKeyboard from '../common/DartKeyboard'
+import useTranslation from '../../../../hooks/i18n'
+import Button from '../../../common/Button'
+import DartKeyboard from '../../common/DartKeyboard'
 
 
 const StartNumberPicker = props => {

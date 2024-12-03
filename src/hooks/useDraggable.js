@@ -3,7 +3,25 @@
 // WebDarts is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 // You should have received a copy of the GNU Affero General Public License along with WebDarts. If not, see <https://www.gnu.org/licenses/>. 
 
-import { useRef, useState, useEffect, useCallback } from 'preact/hooks'
+import { createContext } from 'preact'
+import { useRef, useState, useEffect, useCallback, useContext } from 'preact/hooks'
+
+
+const transformPrefixes = [
+  "transform",
+  "msTransform",
+  "MozTransform",
+  "WebkitTransform",
+  "OTransform"
+]
+const findTransformVendorPrefix = () => {
+  const tmp = document.createElement('div')
+  return transformPrefixes.find(p => typeof tmp.style[p] !== 'undefined')
+}
+
+export const ScrollContext = createContext()
+
+const transformPrefix = findTransformVendorPrefix()
 
 export const throttle = (f) => {
   let token = null,
@@ -25,8 +43,12 @@ export const throttle = (f) => {
 const useDraggable = ({
     onDrag = ((i) => i),
     onDragStart = (() => {}),
-    onDrop = (() => {})
+    onDrop = (() => {}),
 }) => {
+
+  const contextScrollRef = useContext(ScrollContext) 
+  const scrollElement = contextScrollRef.current || window
+  
   // this state doesn't change often, so it's fine
   const [pressed, setPressed] = useState(false)
 
@@ -52,21 +74,8 @@ const useDraggable = ({
       elem.removeEventListener("pointerdown", handleMouseDown)
     }
   }, [])
-  // useEffect(() => {
-  //   return () => {
-  //     // this shouldn't really happen if React properly calls
-  //     // function-refs, but I'm not proficient enough to know
-  //     // for sure, and you might get a memory leak out of it
-  //     if (unsubscribe.current) {
-  //       unsubscribe.current()
-  //     }
-  //   }
-  // }, [])
 
   useEffect(() => {
-      // why subscribe in a `useEffect`? because we want to subscribe
-      // to mousemove only when pressed, otherwise it will lag even
-      // when you're not dragging
       const elem = ref.current
       if (!pressed) {
         elem.style.transform = null
@@ -76,23 +85,62 @@ const useDraggable = ({
         }
         return
     }
+
+    let scrolliter = null
+    const startScroll = (y, cb) => {
+      if(scrolliter){
+        return
+      }
+      scrolliter = setInterval(() => {
+          if((y < 0 && scrollElement.scrollTop > 0) || (y > 0 && scrollElement.scrollHeight - scrollElement.clientHeight - scrollElement.scrollTop > 1)){
+            cb()
+            scrollElement.scrollBy(0, y)
+          }
+        }, 2)
+    }
+    const stopScroll = () => {
+      if(!scrolliter){
+        return
+      }
+      clearInterval(scrolliter)
+      scrolliter = null
+    }
     
     const handleMouseMove = throttle((event) => {
-            // needed for TypeScript anyway
-            if (!ref.current || !position.current) {
-                return
-            }
-      const pos = position.current
-      const newPos = {
-        // x: pos.x + event.movementX,
-        y: pos.y + event.movementY
+      if (!ref.current || !position.current) {
+          return
       }
-      position.current = newPos
-      onDrag(newPos)
-      elem.style.transform = `translateY(${pos.y}px)`
+
+      const pos = position.current
+      const newY = pos.y + event.movementY
+      if(newY ){
+
+        const newPos = {
+          // x: pos.x + event.movementX,
+          y: newY
+        }
+        if(event.clientY < 150 && event.movementY < 0){
+          startScroll(event.movementY, () => {
+            position.current.y+=event.movementY
+            elem.style[transformPrefix] = `translateY(${position.current.y}px)`
+          })
+        } else if(event.clientY > (scrollElement.clientHeight-150) && event.movementY > 0){
+          startScroll(event.movementY, () => {
+            position.current.y+=event.movementY
+            elem.style[transformPrefix] = `translateY(${position.current.y}px)`
+          })
+        } else {
+          stopScroll()
+        }
+        elem.style[transformPrefix] = `translateY(${pos.y}px)`
+        position.current = newPos
+        onDrag(newPos)
+      }
+
     })
     const handleMouseUp = (e) => {
         onDrop()
+        stopScroll()
       setPressed(false)
     }
     // subscribe to mousemove and mouseup on document, otherwise you
@@ -103,6 +151,7 @@ const useDraggable = ({
     document.addEventListener("pointerup", handleMouseUp)
     return () => {
       handleMouseMove.cancel()
+      stopScroll()
       document.removeEventListener("pointermove", handleMouseMove)
       document.removeEventListener("pointercancel", handleMouseUp)
       document.removeEventListener("pointerup", handleMouseUp)

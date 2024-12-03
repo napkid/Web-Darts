@@ -3,7 +3,8 @@
 // WebDarts is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 // You should have received a copy of the GNU Affero General Public License along with WebDarts. If not, see <https://www.gnu.org/licenses/>. 
 
-import TicTacToeGame from '../components/games/tic-tac-toe/TicTacToe.jsx'
+// import Cricket from '../components/games/cricket/Cricket.jsx'
+import TicTacToeGame from '../components/games/cricket/tic-tac-toe/TicTacToe.jsx'
 import X01Game from '../components/games/x01/X01Game.jsx'
 
 export const categories = [{
@@ -72,7 +73,23 @@ export const specialGames = [{
 // {
 //     label: 'Cricket',
 //     minPlayers: 2,
-//     value: 'cricket'
+//     value: 'cricket',
+//     component: Cricket,
+//     minPlayers: 2,
+//     minTeams: 2,
+//     maxTeams: 22,
+//     availableTeams: [{
+//         id: '1',
+//         name: 'team-1',
+//         color: 'blue'
+//     }, {
+//         id: '2',
+//         name: 'team-2',
+//         color: 'red'
+//     }],
+//     props: {
+//         startNumber: 20
+//     }
 // }
 ]
 

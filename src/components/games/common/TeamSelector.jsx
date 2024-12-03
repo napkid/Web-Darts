@@ -38,6 +38,7 @@ const PlayerDisplay = props => {
 const makeInitialTeam = setting => ({
     id: setting.id,
     name: setting.name,
+    color: setting.color,
     players: []
 })
 

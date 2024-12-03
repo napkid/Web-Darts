@@ -58,6 +58,10 @@ const X01Game = props => {
     
     const reset  = () => {
         setGameState({
+            scores: players.reduce((s, p) => {
+                s[p.id] = max
+                return s
+            }, {}),
             turns: []
         })
     }
@@ -103,6 +107,7 @@ const X01Game = props => {
 
 
     const checkWinner = () => {
+        console.log(gameState);
         const winner = players.find(p => gameState.scores[p.id] === 0)
         return winner
     }

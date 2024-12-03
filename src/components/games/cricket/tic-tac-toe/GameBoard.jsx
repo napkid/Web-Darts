@@ -3,17 +3,26 @@
 // WebDarts is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.
 // You should have received a copy of the GNU Affero General Public License along with WebDarts. If not, see <https://www.gnu.org/licenses/>. 
 
+import clsx from 'clsx'
 
+const symbolsColorClassnames = {
+    'red': 'stroke-red-500',
+    'green': 'stroke-emerald-300',
+    'yellow': 'stroke-yellow-500',
+    'blue': 'stroke-blue-500',
+}
 const GameSymbol = props => {
     const {
         x,
         y,
         width,
         height,
-        symbol
+        symbol,
+        color,
     } = props
 
     return <use
+        className={clsx(symbolsColorClassnames[color])}
         width={width}
         height={height}
         xlinkHref={`#${symbol}`}
@@ -51,7 +60,7 @@ const GameBoard = props => {
 
     return <div className="bg-emerald-600 p-4 rounded-lg">
         <svg strokeLinecap="round" className="w-full h-full" viewBox="0 0 48 48" >
-            <symbol id="cross" viewBox="0 0 16 16" className="stroke-emerald-800">
+            <symbol id="cross" viewBox="0 0 16 16" className="stroke-blue-600">
                 <line x1="2" x2="14" y1="2" y2="14" style={{
                         strokeWidth: 1
                     }} />
@@ -60,15 +69,15 @@ const GameBoard = props => {
                 }} />
             </symbol>
 
-            <symbol id="triangle" viewBox="0 0 16 16" className="stroke-emerald-800">
+            <symbol id="triangle" viewBox="0 0 16 16" className="stroke-green-500">
                 <polygon points="2,14 8,2 14,14" style={{
                     fill: 'none',
                     strokeWidth: 1
                 }} />
             </symbol>
 
-            <symbol id="circle" viewBox="0 0 16 16">
-                <circle cx="8" cy="8" r="6" className="stroke-emerald-800" strokeWidth="1" fill="none" />
+            <symbol id="circle" viewBox="0 0 16 16" className="stroke-red-500">
+                <circle cx="8" cy="8" r="6" strokeWidth="1" fill="none" />
             </symbol>
 
 
@@ -92,6 +101,7 @@ const GameBoard = props => {
                             .fill(null)
                             .map((c, idx) => <GameSymbol
                                 symbol={t.id}
+                                color={t.color}
                                 x={tIdx*smallSymbolSize+boxIdx*step}
                                 y={idx*smallSymbolSize+rowIdx*step}
                                 width={smallSymbolSize}

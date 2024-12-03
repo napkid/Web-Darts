@@ -6,11 +6,11 @@
 import { useState } from 'preact/hooks'
 import { useLocation } from 'wouter'
 
-import useTranslation from '../../../hooks/i18n'
-import DescriptionList from '../../common/DescriptionList'
-import DartButton from '../common/DartButton'
-import DartKeyboard from '../common/DartKeyboard'
-import WinnerModal from '../common/WinnerModal'
+import useTranslation from '../../../../hooks/i18n'
+import DescriptionList from '../../../common/DescriptionList'
+import DartButton from '../../common/DartButton'
+import DartKeyboard from '../../common/DartKeyboard'
+import WinnerModal from '../../common/WinnerModal'
 import GameBoard from './GameBoard'
 import StartNumberPicker from './StartNumberPicker'
 
@@ -166,21 +166,18 @@ const TicTacToeGame = props => {
 
         </div>
 
+        <DartKeyboard
+            open={keyboardOpen}
+            onSubmit={handleScore}
+            onExit={() => setKeyboardOpen(false)}
+        />
+
         <DartButton
             onClick={() => setKeyboardOpen(!keyboardOpen)}
             disabled={!!winner}
         />
 
-        <DartKeyboard
-            open={keyboardOpen}
-            matrix={gameState.board.map(r => r.map(c => ({
-                label: c.value,
-                value: c.value,
-                maxCount: 3
-            })))}
-            onSubmit={handleScore}
-            onExit={() => setKeyboardOpen(false)}
-        />
+        
     </div>
 }
 

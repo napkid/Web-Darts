@@ -36,7 +36,7 @@ const GameSelect = props => {
             </ul>
         </Route>
         <Route path="/game-selection/:id">
-            {params => <ul className="px-4 mb-4 space-y-4 mb-4">
+            {params => <ul className="px-4 space-y-4 mb-4">
                 {gamesByCat[params.id].map(g => <li>
                     <Link key={g.value} href={`/game/${g.value}`}>
                         <Button
